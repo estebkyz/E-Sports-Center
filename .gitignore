@@ -1,0 +1,16 @@
+.env
+.venv/
+env/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+log.txt
+err.txt
+out.txt
+out2.txt
+out3.txt
+debug.txt
+*.sqlite3

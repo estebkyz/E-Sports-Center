@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Entrenamiento E-Sports</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">E-Sports Center</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Atletas</a></li>
+                <li><a href="#">Equipos</a></li>
+                <li><a href="#">Sesiones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <header class="page-header">
+            <h1>Bienvenido al Centro de Entrenamiento</h1>
+            <p>Gestiona tus recursos, atletas y entrenamientos deportivos de forma eficiente.</p>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Atletas activos</h3>
+                <p id="total-atletas">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Sesiones hoy</h3>
+                <p id="total-sesiones">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Equipos</h3>
+                <p id="total-equipos">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Plataformas</h3>
+                <p id="total-plataformas">--</p>
+            </div>
+        </section>
+
+        <section class="recent-sessions">
+            <div class="section-title">
+                <h2>Sesiones recientes</h2>
+                <button class="btn btn-primary">Agendar sesión</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Juego</th>
+                        <th>Estado</th>
+                        <th>Horario</th>
+                        <th>Equipo/Atleta</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="sessions-table-body">
+                    <tr><td colspan="6" class="text-center">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
