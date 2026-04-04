@@ -45,6 +45,22 @@ class Usuario(models.Model):
     trofeos          = models.ManyToManyField(
         'Trofeo', through='UsuarioTrofeo', blank=True
     )
+    def asignar_trofeo(self, trofeo):
+        # Agrega el trofeo al usuario y recalcula el nivel del equipo si pertenece a uno
+        self.trofeos.add(trofeo)
+        if self.equipo:
+            self.equipo.calcular_nivel()
+    def get_nombre_completo(self):
+        return self.nombre_completo
+
+    def set_nombre_completo(self, nombre):
+        self.nombre_completo = nombre
+        
+    def get_numero_documento(self):
+        return self.numero_documento
+        
+    def set_numero_documento(self, numero):
+        self.numero_documento = numero
 
     class Meta:
         db_table = 'usuario'

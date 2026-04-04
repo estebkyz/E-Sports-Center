@@ -10,7 +10,6 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], url_path='trofeos')
     def asignar_trofeo(self, request, pk=None):
-        """RF-03: Asigna un trofeo al usuario."""
         usuario = self.get_object()
         trofeo_id = request.data.get('trofeo_id')
         try:

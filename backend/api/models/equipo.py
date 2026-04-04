@@ -22,8 +22,39 @@ class Equipo(models.Model):
             for ut in miembro.usuariotrofeo_set.all()
         )
 
+    def calcular_nivel(self):
+        # Suma los puntos de todos los trofeos de los atletas y actualiza el nivel en la BD
+        puntos = self.total_puntos_trofeos
+        if puntos >= 2000:
+            self.nivel = NivelEquipo.ELITE
+        elif puntos >= 1000:
+            self.nivel = NivelEquipo.ORO
+        elif puntos >= 500:
+            self.nivel = NivelEquipo.PLATA
+        else:
+            self.nivel = NivelEquipo.BRONCE
+        self.save()
+
+    def asignar_atleta(self, usuario):
+        # Asocia un atleta a este equipo y recalcula el nivel
+        usuario.equipo = self
+        usuario.save()
+        self.calcular_nivel()
+    def get_nombre(self):
+        return self.nombre
+
+    def set_nombre(self, nombre):
+        self.nombre = nombre
+        
+    def get_nivel(self):
+        return self.nivel
+
+    def set_nivel(self, nivel):
+        self.nivel = nivel
+
     class Meta:
         db_table = 'equipo'
+        ordering = ['id']
 
     def __str__(self):
         return self.nombre

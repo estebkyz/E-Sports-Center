@@ -31,9 +31,10 @@ CREATE TABLE juego (
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[juego_plataforma]') AND type in (N'U'))
 CREATE TABLE juego_plataforma (
+    id            INT IDENTITY(1,1) PRIMARY KEY,
     juego_id      INT NOT NULL REFERENCES juego(id),
     plataforma_id INT NOT NULL REFERENCES plataforma(id),
-    PRIMARY KEY (juego_id, plataforma_id)
+    CONSTRAINT UQ_juego_plataforma UNIQUE (juego_id, plataforma_id)
 );
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[trofeo]') AND type in (N'U'))
@@ -78,18 +79,20 @@ CREATE TABLE usuario (
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usuario_trofeo]') AND type in (N'U'))
 CREATE TABLE usuario_trofeo (
+    id              INT IDENTITY(1,1) PRIMARY KEY,
     usuario_id      INT  NOT NULL REFERENCES usuario(id),
     trofeo_id       INT  NOT NULL REFERENCES trofeo(id),
     fecha_obtencion DATE NOT NULL DEFAULT GETDATE(),
-    PRIMARY KEY (usuario_id, trofeo_id)
+    CONSTRAINT UQ_usuario_trofeo UNIQUE (usuario_id, trofeo_id)
 );
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[equipo_trofeo]') AND type in (N'U'))
 CREATE TABLE equipo_trofeo (
+    id              INT IDENTITY(1,1) PRIMARY KEY,
     equipo_id       INT  NOT NULL REFERENCES equipo(id),
     trofeo_id       INT  NOT NULL REFERENCES trofeo(id),
     fecha_obtencion DATE NOT NULL DEFAULT GETDATE(),
-    PRIMARY KEY (equipo_id, trofeo_id)
+    CONSTRAINT UQ_equipo_trofeo UNIQUE (equipo_id, trofeo_id)
 );
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[consola]') AND type in (N'U'))
@@ -127,6 +130,8 @@ CREATE TABLE sesion (
     estado               NVARCHAR(10) NOT NULL DEFAULT 'agendada'
         CHECK (estado IN ('agendada','activa','cerrada','cancelada')),
     puntos_xp_asignados  INT      NOT NULL DEFAULT 0,
+    hora_real_inicio     TIME     NULL,
+    motivo_cancelacion   NVARCHAR(255) NULL,
     CONSTRAINT chk_sesion_equipo_atleta
         CHECK (
             (equipo_id IS NOT NULL AND atleta_id IS NULL) OR

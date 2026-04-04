@@ -12,6 +12,7 @@ class SesionSerializer(serializers.ModelSerializer):
         return obj.duracion_horas()
 
     def validate(self, data):
+        # Una sesión no puede tener equipo y atleta al mismo tiempo
         equipo = data.get('equipo')
         atleta = data.get('atleta')
         if equipo and atleta:

@@ -13,6 +13,17 @@ class Control(models.Model):
     numero_serie = models.CharField(max_length=100, unique=True)
     plataforma   = models.ForeignKey('Plataforma', on_delete=models.PROTECT, related_name='controles')
     tipo         = models.CharField(max_length=15, choices=TipoControl.choices)
+    def get_numero_serie(self):
+        return self.numero_serie
+
+    def set_numero_serie(self, numero_serie):
+        self.numero_serie = numero_serie
+
+    def get_tipo(self):
+        return self.tipo
+
+    def set_tipo(self, tipo):
+        self.tipo = tipo
 
     class Meta:
         db_table = 'control'

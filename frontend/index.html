@@ -3,70 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro de Entrenamiento E-Sports</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Gestión E-Sports INDER</title>
+    <link rel="stylesheet" href="/frontend/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">E-Sports Center</div>
-        <nav>
-            <ul>
-                <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Atletas</a></li>
-                <li><a href="#">Equipos</a></li>
-                <li><a href="#">Sesiones</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="container">
-        <header class="page-header">
-            <h1>Bienvenido al Centro de Entrenamiento</h1>
-            <p>Gestiona tus recursos, atletas y entrenamientos deportivos de forma eficiente.</p>
+    <div class="app-container">
+        <header>
+            <h1>INDER E-Sports Manager</h1>
+            <p>Panel de Administración de Torneos</p>
         </header>
 
-        <section class="stats-grid">
-            <div class="stat-card">
-                <h3>Atletas activos</h3>
-                <p id="total-atletas">--</p>
-            </div>
-            <div class="stat-card">
-                <h3>Sesiones hoy</h3>
-                <p id="total-sesiones">--</p>
-            </div>
-            <div class="stat-card">
-                <h3>Equipos</h3>
-                <p id="total-equipos">--</p>
-            </div>
-            <div class="stat-card">
-                <h3>Plataformas</h3>
-                <p id="total-plataformas">--</p>
-            </div>
-        </section>
+        <nav class="main-nav">
+            <button class="nav-btn active" onclick="showSection('plataformas')">Plataformas</button>
+            <button class="nav-btn" onclick="showSection('juegos')">Juegos</button>
+            <button class="nav-btn" onclick="showSection('equipos')">Equipos</button>
+        </nav>
 
-        <section class="recent-sessions">
-            <div class="section-title">
-                <h2>Sesiones recientes</h2>
-                <button class="btn btn-primary">Agendar sesión</button>
-            </div>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Juego</th>
-                        <th>Estado</th>
-                        <th>Horario</th>
-                        <th>Equipo/Atleta</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="sessions-table-body">
-                    <tr><td colspan="6" class="text-center">Cargando...</td></tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
+        <main>
+            <section id="plataformas" class="content-section active">
+                <div class="section-header">
+                    <h2>Gestión de Plataformas</h2>
+                    <button class="btn-primary" onclick="openModal('plataformas')">+ Nueva Plataforma</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Marca</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-plataformas">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="juegos" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Juegos</h2>
+                    <button class="btn-primary" onclick="openModal('juegos')">+ Nuevo Juego</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Estudio</th>
+                                <th>Plataformas</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-juegos">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="equipos" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Equipos</h2>
+                    <button class="btn-primary" onclick="openModal('equipos')">+ Nuevo Equipo</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Nivel</th>
+                                <th>Juego</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-equipos">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal-plataforma" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal-plataforma')">&times;</span>
+            <h3 id="modal-title-plataforma">Crear/Editar Plataforma</h3>
+            <form id="form-plataforma">
+                <input type="hidden" id="plataforma-id">
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="plataforma-nombre" required placeholder="Ej: PlayStation 5">
+                </div>
+                <div class="form-group">
+                    <label>Marca:</label>
+                    <input type="text" id="plataforma-marca" required placeholder="Ej: Sony">
+                </div>
+                <button type="submit" class="btn-submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-juego" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal-juego')">&times;</span>
+            <h3 id="modal-title-juego">Crear/Editar Juego</h3>
+            <form id="form-juego">
+                <input type="hidden" id="juego-id">
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="juego-nombre" required placeholder="Ej: FIFA 24">
+                </div>
+                <div class="form-group">
+                    <label>Calificación ESRB:</label>
+                    <select id="juego-esrb" required>
+                        <option value="E">Everyone</option>
+                        <option value="E10+">Everyone 10+</option>
+                        <option value="T">Teen</option>
+                        <option value="M">Mature 17+</option>
+                        <option value="AO">Adults Only 18+</option>
+                        <option value="RP">Rating Pending</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Estudio Desarrollador:</label>
+                    <input type="text" id="juego-estudio" required placeholder="Ej: EA Sports">
+                </div>
+                <div class="form-group">
+                    <label>Plataformas (IDs separados por coma):</label>
+                    <input type="text" id="juego-plataformas" required placeholder="Ej: 1,2">
+                </div>
+                <div class="form-group">
+                    <label>Número de jugadores:</label>
+                    <input type="number" id="juego-jugadores" required placeholder="Ej: 4">
+                </div>
+                <div class="form-group">
+                    <label>Tipo:</label>
+                    <select id="juego-tipo" required>
+                        <option value="fisico">Físico</option>
+                        <option value="digital">Digital</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Existencias:</label>
+                    <input type="number" id="juego-existencias" required placeholder="Ej: 10">
+                </div>
+                <button type="submit" class="btn-submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-equipo" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal-equipo')">&times;</span>
+            <h3 id="modal-title-equipo">Crear/Editar Equipo</h3>
+            <form id="form-equipo">
+                <input type="hidden" id="equipo-id">
+                <div class="form-group">
+                    <label>Nombre del Equipo:</label>
+                    <input type="text" id="equipo-nombre" required placeholder="Ej: Los Guerreros">
+                </div>
+                <div class="form-group">
+                    <label>Nivel:</label>
+                    <select id="equipo-nivel" required>
+                        <option value="bronce">Bronce</option>
+                        <option value="plata">Plata</option>
+                        <option value="oro">Oro</option>
+                        <option value="elite">Elite</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Horas Jugadas:</label>
+                    <input type="number" id="equipo-horas" required value="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>ID Juego:</label>
+                    <input type="number" id="equipo-juego-id" required placeholder="ID del juego asociado">
+                </div>
+                <button type="submit" class="btn-submit">Guardar</button>
+            </form>
+        </div>
+    </div>
 
     <script src="js/app.js"></script>
 </body>
